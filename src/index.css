@@ -1,0 +1,24 @@
+
+@font-face {
+  font-family: 'SFREGULAR';
+  src: url('/src/assets/fonts/SF-Pro-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'SFSEMIBOLD';
+  src: url('/src/assets/fonts/SF-Pro-Semibold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+}
