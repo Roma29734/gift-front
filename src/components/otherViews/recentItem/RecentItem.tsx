@@ -19,7 +19,7 @@ export const RecentItem: React.FC<RecentItemParam> = ({item}) => {
     const {theme} = useTheme()
 
 
-    const getIconForType = (item: RecentAction) => {
+    const getIconForType = () => {
         if (isReceiveGiftType(item.type)) return IcReceive;
         if (isSentGiftType(item.type)) return IcSent;
         if (isBuyGiftType(item.type)) return IcBuy;
@@ -64,7 +64,7 @@ export const RecentItem: React.FC<RecentItemParam> = ({item}) => {
 
                         {/* Накладывающаяся иконка */}
                         <img src={
-                            getIconForType(item.type)
+                            getIconForType()
                         } style={{
                             position: 'absolute',
                             right: '-4px',

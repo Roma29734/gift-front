@@ -9,7 +9,7 @@ import IcBgStar from "../../../assets/ico/ic_bg_star.svg";
 
 interface ModalGiftProps {
     isVisible: boolean;
-    onBtnClick: () => void;
+    onClose: () => void;
     itemGiftMore: GiftArea
 }
 

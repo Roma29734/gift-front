@@ -2,7 +2,7 @@ import * as React from "react";
 import NavigationBar from "../../otherViews/navigationBar/NavigationBar.tsx";
 import ic_gift from "../../../assets/ico/ic_gift.svg";
 import {useEffect, useState} from "react";
-import {createUsers, getGifts, getUserById, Gift} from "../../../core/remoteWork/StoreRemote.tsx";
+import { getGifts, Gift} from "../../../core/remoteWork/StoreRemote.tsx";
 import {StoreGiftItem} from "../../otherViews/storeGiftItem/StoreGiftItem.tsx";
 import {useNavigate} from "react-router-dom";
 import {useTheme} from "../../../core/style/ThemeContext.tsx";

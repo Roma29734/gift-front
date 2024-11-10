@@ -22,7 +22,7 @@ export const ProfileScreen: React.FC = () => {
     const [selectedMode, setSelectedMode] = useState("light");
     const [selectedLanguage, setSelectedLanguage] = useState("EN");
 
-    const [gifts, setGifts] = useState<GiftArea[] | null>(null)
+    const [gifts, setGifts] = useState<GiftArea[] >([])
 
     const [isVisibleSendGiftModal, setIsVisibleSendGiftModal] = useState(false)
     const [selectedGifts, setSelectedGifts] = useState<GiftArea | null>(null)
@@ -147,7 +147,7 @@ export const ProfileScreen: React.FC = () => {
                     }}>Recent Actions</span>
                 </div>
 
-                {gifts?.length > 0 ?
+                {gifts.length > 0 ?
 
                     <div style={{
                         display: 'grid',

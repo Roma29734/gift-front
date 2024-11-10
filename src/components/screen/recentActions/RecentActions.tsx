@@ -9,7 +9,7 @@ import LottieAnimation from "../../otherViews/LottieAnimation.tsx";
 export const RecentActionsScreen: React.FC = () => {
 
     const {theme} = useTheme()
-    const [recentItem, setRecentItem] = useState<RecentAction[] | null>(null)
+    const [recentItem, setRecentItem] = useState<RecentAction[] >([])
 
     const isGetRecentActions = async () => {
         const result = await getRecentActions()

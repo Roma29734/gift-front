@@ -17,7 +17,7 @@ export const AboutUserScreen: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const [gifts, setGifts] = useState<GiftArea[] | null>(null)
+    const [gifts, setGifts] = useState<GiftArea[] >([])
 
     const [isVisibleSendGiftModal, setIsVisibleSendGiftModal] = useState(false)
     const [selectedGifts, setSelectedGifts] = useState<GiftArea | null>(null)

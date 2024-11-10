@@ -48,7 +48,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         overflow: 'hidden',
     };
 
-    const navItemStyle = (isSelected: boolean): React.CSSProperties => ({
+    const navItemStyle = (): React.CSSProperties => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -70,7 +70,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     return (
         <div style={navBarStyle}>
             <div
-                style={navItemStyle(selected === 'Store')}
+                style={navItemStyle()}
                 onClick={() => {
                     setSelected('Store');
                     onStoreClick();
@@ -81,7 +81,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             </div>
 
             <div
-                style={navItemStyle(selected === 'Gift')}
+                style={navItemStyle()}
                 onClick={() => {
                     setSelected('Gift');
                     onGiftClick();
@@ -92,7 +92,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             </div>
 
             <div
-                style={navItemStyle(selected === 'Leaderboard')}
+                style={navItemStyle()}
                 onClick={() => {
                     setSelected('Leaderboard');
                     onLeaderboardClick();
@@ -103,7 +103,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             </div>
 
             <div
-                style={navItemStyle(selected === 'Profile')}
+                style={navItemStyle()}
                 onClick={() => {
                     setSelected('Profile');
                     onProfileClick();

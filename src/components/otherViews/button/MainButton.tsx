@@ -1,20 +1,16 @@
 import * as React from "react";
 import {useState} from "react";
 
-
 interface MainButtonParam {
     tx: string;
     onClick: () => void;
-    padding?: number | null;
-    colorBg?: string | null;
-    colorTx?: string | null;
+    padding?: number;
+    colorBg?: string;
+    colorTx?: string;
 }
 
-export const MainButton: React.FC<MainButtonParam> = ({tx, onClick, colorBg= "#007AFF", colorTx = "white", padding}) => {
-
-    const [isPressed, setIsPressed] = useState(false)
-
-
+export const MainButton: React.FC<MainButtonParam> = ({tx, onClick, colorBg = "#007AFF", colorTx = "white", padding}) => {
+    const [isPressed, setIsPressed] = useState(false);
     return (
 
         <div style={{

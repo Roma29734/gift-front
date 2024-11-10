@@ -183,6 +183,7 @@ export const SendGifModal: React.FC<ModalRatingProps> = ({isVisible, onClose, on
 
                 <MainButton tx={"Send Gift to Contact"} onClick={() => {
                     sendToTgChose(`@GiftApp - ${itemGiftMore.name}`)
+                    onBtnClick()
                 }} padding={1}/>
 
             </div>

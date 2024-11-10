@@ -72,7 +72,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
             />
 
             {/* Опции */}
-            {options.map((option, index) => (
+            {options.map((option) => (
                 <div
                     key={option.value}
                     style={{

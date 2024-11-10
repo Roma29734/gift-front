@@ -53,7 +53,7 @@ export const LeaderBoardScreen: React.FC = () => {
 
                 <LeaderBoardItem name={leader.userName} gift={leader.gifts} onClick={() => {
                     navigate('/aboutUser', { state: {user: leader, pos: pos + 1} })
-                }} img={leader.imageAvatar} posithion={pos + 1}/>
+                }} img={leader.imageAvatar ? leader.imageAvatar: "" } posithion={pos + 1}/>
 
             ))}
 

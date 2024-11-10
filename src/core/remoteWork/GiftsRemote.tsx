@@ -17,15 +17,21 @@ export interface GiftArea {
 
 
 
-export const getGiftsForUser = async (userId: string = "2") => {
+export const getGiftsForUser = async (userId: string = "2"): Promise<GiftArea[] | string> => {
     try {
-        const response = await axios.post<GiftArea>(`${BASE_URL}gift/getGiftsForUser`, {
+        const response = await axios.post<GiftArea[]>(`${BASE_URL}gift/getGiftsForUser`, {
             userId: userId
-        },{headers: {Authorization: `tma ${initDataRaw}`}})
-        console.log("response", response)
-        return response.data
-    }  catch (e) {
-        console.log("Error", e)
-        return `error createUsers ${e}`
+        }, { headers: { Authorization: `tma ${initDataRaw}` } });
+
+        console.log("response", response);
+
+        if (response.data && response.data.length > 0) {
+            return response.data as GiftArea[];
+        } else {
+            return "Error: No gifts found for user or response data is empty" as string;
+        }
+    } catch (e) {
+        console.error("Error fetching gifts for user:", e);
+        return `Error fetching gifts: ${e instanceof Error ? e.message : String(e)}` as string;
     }
-}
+};

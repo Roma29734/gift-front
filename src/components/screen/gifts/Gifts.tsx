@@ -11,7 +11,7 @@ import {AbsenceGifts} from "../../otherViews/absenceGifts/AbsenceGifts.tsx";
 export const GiftsScreen: React.FC = () => {
 
     const navigate = useNavigate();
-    const [gifts, setGifts] = useState<GiftArea[] | null>(null)
+    const [gifts, setGifts] = useState<GiftArea[]>([])
 
     const {theme} = useTheme()
 
@@ -72,7 +72,7 @@ export const GiftsScreen: React.FC = () => {
                 </span>
 
 
-                {gifts?.length > 0 ?
+                {gifts.length > 0 ?
 
                     <div style={{
                         display: 'grid',
