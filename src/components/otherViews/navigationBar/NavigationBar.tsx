@@ -4,6 +4,7 @@ import ic_gift from "../../../assets/ico/ic_gift.svg";
 import ic_profile from "../../../assets/ico/ic_profile.svg";
 import ic_leaderboard from "../../../assets/ico/ic_leaderboard.svg";
 import {useTheme} from "../../../core/style/ThemeContext.tsx";
+import {useTranslation} from "react-i18next";
 
 type NavigationBarProps = {
     initialSelected: string;
@@ -29,7 +30,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     }, [initialSelected]);
 
     const {theme} = useTheme()
-
+    const { t } = useTranslation();
 
     const getStyleForText = (isSelected: boolean): React.CSSProperties => ({
         fontSize: '10px',
@@ -77,7 +78,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 }}
             >
                 <img src={icStore} alt="Fap" style={getIconStyle(selected === 'Store')} />
-                <span style={getStyleForText(selected === 'Store')}>Store</span>
+                <span style={getStyleForText(selected === 'Store')}>{t("navBar.Store")}</span>
             </div>
 
             <div
@@ -88,7 +89,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 }}
             >
                 <img src={ic_gift} alt="GiftTypes" style={getIconStyle(selected === 'Gift')} />
-                <span style={getStyleForText(selected === 'Gift')}>Gifts</span>
+                <span style={getStyleForText(selected === 'Gift')}>{t("navBar.Gifts")}</span>
             </div>
 
             <div
@@ -99,7 +100,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 }}
             >
                 <img src={ic_leaderboard} alt="Leaderboard" style={getIconStyle(selected === 'Leaderboard')} />
-                <span style={getStyleForText(selected === 'Leaderboard')}>Leaderboard</span>
+                <span style={getStyleForText(selected === 'Leaderboard')}>{t("navBar.Leaderboard")}</span>
             </div>
 
             <div
@@ -110,7 +111,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 }}
             >
                 <img src={ic_profile} alt="Profile" style={getIconStyle(selected === 'Profile')} />
-                <span style={getStyleForText(selected === 'Profile')}>Profile</span>
+                <span style={getStyleForText(selected === 'Profile')}>{t("navBar.Profile")}</span>
             </div>
         </div>
     );

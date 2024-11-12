@@ -6,34 +6,45 @@ import {useEffect, useState} from "react";
 import IcMoon from "../../../assets/ico/ic_moon.svg";
 import IcSun from "../../../assets/ico/ic_sun.svg";
 import ProfileImageWithBadge from "../../otherViews/profileImage/ProfileImage.tsx";
-import IcPr from "../../../assets/ico/ic_profile_ex.png";
 import {getGiftsForUser, GiftArea} from "../../../core/remoteWork/GiftsRemote.tsx";
 import {GiftItemSmall} from "../../otherViews/giftItemSmall/GiftItemSmall.tsx";
 import {ModalGift} from "../../modal/modalGift/ModalGift.tsx";
 import { useTheme } from "../../../core/style/ThemeContext.tsx";
 import {AbsenceGifts} from "../../otherViews/absenceGifts/AbsenceGifts.tsx";
 import IcWatch from "../../../assets/ico/ic_watch.svg";
-
+import {useTelegramBackButton} from "../../../core/Utils.ts";
+import Progressbar from "../../otherViews/progressBar/ProgressBar.tsx";
+import {useTranslation} from "react-i18next";
+import {useData} from "../../otherViews/DataContext.tsx";
+import {changeLanguage} from "i18next";
+import {getLanguageState, saveLanguageState} from "../../../core/translations/i18n.ts";
 
 export const ProfileScreen: React.FC = () => {
-
+    try {
+        useTelegramBackButton(true)
+    } catch (e ) {
+        console.log("error in postEvent - ", e)
+    }
     const navigate = useNavigate();
-
-    const [selectedMode, setSelectedMode] = useState("light");
-    const [selectedLanguage, setSelectedLanguage] = useState("EN");
+    const {theme, toggleTheme, getCurrentTheme} = useTheme()
+    const [selectedMode, setSelectedMode] = useState<string>(getCurrentTheme);
+    const [selectedLanguage, setSelectedLanguage] = useState(getLanguageState() ? getLanguageState(): "EN");
 
     const [gifts, setGifts] = useState<GiftArea[] >([])
-
+    const { t } = useTranslation();
+    const {dataApp} = useData()
     const [isVisibleSendGiftModal, setIsVisibleSendGiftModal] = useState(false)
     const [selectedGifts, setSelectedGifts] = useState<GiftArea | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
     const processingGetGiftsForUser = async () => {
+        setIsLoading(true)
         const response = await getGiftsForUser()
         if (typeof response == "object") {
             setGifts(response)
         }
+        setIsLoading(false)
     }
 
-    const {theme, toggleTheme} = useTheme()
 
     const onCloseModal = () => {
         setIsVisibleSendGiftModal(false)
@@ -87,7 +98,7 @@ export const ProfileScreen: React.FC = () => {
 
 
                     <ProfileImageWithBadge
-                        imageSrc={IcPr}
+                        imageSrc={dataApp.imageAvatar? dataApp.imageAvatar : ""}
                         badgeText="#160"
                         badgeColor="#888888"
                         badgeTextColor="#FFFFFF"
@@ -99,8 +110,12 @@ export const ProfileScreen: React.FC = () => {
                             {label: "EN", value: "EN"},
                             {label: "RU", value: "RU"}
                         ]}
-                        selected={selectedLanguage}
-                        onChange={setSelectedLanguage}
+                        selected={selectedLanguage ? selectedLanguage: "EN"}
+                        onChange={(value) => {
+                            setSelectedLanguage(value)
+                            saveLanguageState(value)
+                            changeLanguage(value)
+                        }}
                         width="100px"
                     />
                 </div>
@@ -111,7 +126,7 @@ export const ProfileScreen: React.FC = () => {
                     color: theme.tTitle,
                     fontFamily: 'SFSEMIBOLD',
                     marginTop: '8px'
-                }}>name</span>
+                }}>{dataApp.userName}</span>
 
 
                 <span style={{
@@ -120,7 +135,7 @@ export const ProfileScreen: React.FC = () => {
                     fontFamily: 'SFREGULAR',
                     marginTop: '4px'
                 }}>
-                    {gifts?.length} gifts received
+                    {gifts?.length} {t('profile.gifts_received')}
                 </span>
 
 
@@ -144,7 +159,7 @@ export const ProfileScreen: React.FC = () => {
                         fontSize: '17px',
                         fontFamily: 'SFREGULAR',
                         color: theme.primary
-                    }}>Recent Actions</span>
+                    }}>{t('profile.recent_actions')}</span>
                 </div>
 
                 {gifts.length > 0 ?
@@ -209,7 +224,7 @@ export const ProfileScreen: React.FC = () => {
 
                 <ModalGift isVisible={isVisibleSendGiftModal} onClose={onCloseModal} itemGiftMore={selectedGifts}/>
             }
-
+            {isLoading && <Progressbar/>}
         </div>
     )
 }

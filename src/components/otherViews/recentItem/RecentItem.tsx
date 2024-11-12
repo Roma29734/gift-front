@@ -9,6 +9,7 @@ import {useTheme} from "../../../core/style/ThemeContext.tsx";
 import IcReceive from "../../../assets/ico/ic_status_receive.svg";
 import IcSent from "../../../assets/ico/ic_status_sent.svg";
 import IcBuy from "../../../assets/ico/ic_status_buy.svg";
+import LottieAnimation from "../LottieAnimation.tsx";
 
 interface RecentItemParam {
     item: RecentAction
@@ -57,10 +58,8 @@ export const RecentItem: React.FC<RecentItemParam> = ({item}) => {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <img src={item.img} style={{
-                            width: '32px',
-                            height: '32px'
-                        }}/>
+                        <LottieAnimation width={32} height={32} url={item.img}/>
+
 
                         {/* Накладывающаяся иконка */}
                         <img src={
@@ -112,6 +111,7 @@ export const RecentItem: React.FC<RecentItemParam> = ({item}) => {
                     }}>
                         {isReceiveGiftType(item.type) && "from"}
                         {isSentGiftType(item.type) && "sent"}
+                        {isBuyGiftType(item.type) && `-${item.type.price.value} ${item.type.price.nameCurrency}`}
                     </span>
 
                     {isReceiveGiftType(item.type) &&

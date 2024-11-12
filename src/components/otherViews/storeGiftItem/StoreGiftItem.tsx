@@ -58,7 +58,7 @@ export const StoreGiftItem: React.FC<StoreGiftItemParam> = ({
                     12 in 10
                 </span>
 
-                <LottieAnimation width={128} height={128} url={`http://localhost:3000${urlGif}`} />
+                <LottieAnimation width={128} height={128} url={`${urlGif}`} />
 
                 <span style={{
                     color: 'black',

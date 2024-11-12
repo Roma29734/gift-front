@@ -30,7 +30,8 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemParam> = ({img, name, posi
 
                 <img src={img} style={{
                     width: '40px',
-                    height: '40px'
+                    height: '40px',
+                    borderRadius: '999px'
                 }}/>
 
                 <div

@@ -7,9 +7,17 @@ import {getGiftsForUser, GiftArea} from "../../../core/remoteWork/GiftsRemote.ts
 import {GiftItemSmall} from "../../otherViews/giftItemSmall/GiftItemSmall.tsx";
 import {ModalGift} from "../../modal/modalGift/ModalGift.tsx";
 import { useTheme } from "../../../core/style/ThemeContext.tsx";
+import {useTelegramBackButton} from "../../../core/Utils.ts";
 
 
 export const AboutUserScreen: React.FC = () => {
+
+
+    try {
+        useTelegramBackButton(true)
+    } catch (e ) {
+        console.log("error in postEvent - ", e)
+    }
 
     const location = useLocation();
     const user = location.state?.user;
@@ -63,7 +71,7 @@ export const AboutUserScreen: React.FC = () => {
 
 
                     <ProfileImageWithBadge
-                        imageSrc={user.image}
+                        imageSrc={user.imageAvatar}
                         badgeText={`#${pos}`}
                         badgeColor="#888888"
                         badgeTextColor="#FFFFFF"

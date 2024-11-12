@@ -1,46 +1,57 @@
-import * as React from "react";
-import NavigationBar from "../../otherViews/navigationBar/NavigationBar.tsx";
+import React, { useEffect, useState } from "react";
+import NavigationBar from "../../otherViews/navigationBar/NavigationBar";
 import ic_gift from "../../../assets/ico/ic_gift.svg";
-import {useEffect, useState} from "react";
-import { getGifts, Gift} from "../../../core/remoteWork/StoreRemote.tsx";
-import {StoreGiftItem} from "../../otherViews/storeGiftItem/StoreGiftItem.tsx";
-import {useNavigate} from "react-router-dom";
-import {useTheme} from "../../../core/style/ThemeContext.tsx";
+import {createUsers, getGifts, getUserById, Gift} from "../../../core/remoteWork/StoreRemote";
+import { StoreGiftItem } from "../../otherViews/storeGiftItem/StoreGiftItem";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "../../../core/style/ThemeContext";
+import {useData} from "../../otherViews/DataContext.tsx";
+import {useTelegramBackButton} from "../../../core/Utils.ts";
+import Progressbar from "../../otherViews/progressBar/ProgressBar.tsx";
+
 
 export const StoreScreen: React.FC = () => {
 
-    const [gifts, setGifts] = useState<Gift[] | null>(null)
-    const navigate = useNavigate();
-
-    const {theme} = useTheme()
-    const getGiftsIts = async () => {
-         const result = await getGifts()
-        if(typeof result == "object") {
-            setGifts(result)
-        }
+    try {
+        useTelegramBackButton(false)
+    } catch (e ) {
+        console.log("error in postEvent - ", e)
     }
 
+    const { dataApp, setDataApp } = useData();
+    const [gifts, setGifts] = useState<Gift[] | null>(null);
+    const navigate = useNavigate();
+    const { theme } = useTheme();
+    const [isLoading, setIsLoading] = useState(false)
 
-    // const getUserByIdAndCreate = async () => {
-    //     const  result = await getUserById()
-    //     if(typeof  result == "object") {
-    //         result
-    //         console.log("result", result)
-    //     } else {
-    //         const createResult =  await createUsers()
-    //         console.log("createResult", createResult)
-    //     }
-    // }
-
+    const fetchOrCreateUser = async () => {
+        setIsLoading(true)
+        const userFromAPI = await getUserById();
+        if (typeof userFromAPI == "object") {
+            setDataApp(userFromAPI);
+        } else {
+            const newUser = await createUsers();
+            if (typeof newUser == "object") {
+                setDataApp(newUser);
+            }
+        }
+        setIsLoading(false)
+    };
 
     useEffect(() => {
-        getGiftsIts()
-        // getUserByIdAndCreate()
+        console.log("dataApp.userId", dataApp.userId)
+        if (dataApp.userId == "") {
+            fetchOrCreateUser();
+        }
+        getGiftsIts();
     }, []);
 
-
-
-
+    const getGiftsIts = async () => {
+        const result = await getGifts();
+        if (typeof result === "object") {
+            setGifts(result);
+        }
+    };
 
     return (
         <div style={{
@@ -51,7 +62,6 @@ export const StoreScreen: React.FC = () => {
             background: theme.background,
             gap: '8px'
         }}>
-
             <div style={{
                 display: "flex",
                 flexDirection: 'column',
@@ -65,27 +75,20 @@ export const StoreScreen: React.FC = () => {
                     filter: 'brightness(0) saturate(100%) invert(31%) sepia(83%) saturate(4394%) hue-rotate(184deg) brightness(96%) contrast(102%)',
                     marginTop: '24px'
                 }}/>
-
                 <span style={{
                     fontSize: '24px',
                     fontFamily: 'SFSEMIBOLD',
                     color: theme.tTitle
-                }}>
-                Buy and Send Gifts
-            </span>
-
+                }}>Buy and Send Gifts</span>
                 <span style={{
                     fontSize: '17px',
                     fontFamily: 'SFREGULAR',
                     color: theme.tSecond
-                }}>
-                    Unique gifts for  everyone by Crypto Pay
-                </span>
-
+                }}>Unique gifts for everyone by Crypto Pay</span>
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)', // Два элемента в строке
-                    gap: '10px', // Расстояние между элементами
+                    gridTemplateColumns: 'repeat(2, 1fr)',
+                    gap: '10px',
                     padding: '16px'
                 }}>
                     {gifts?.map((gift) => (
@@ -99,11 +102,7 @@ export const StoreScreen: React.FC = () => {
                         />
                     ))}
                 </div>
-
-
             </div>
-
-
             <div style={{
                 position: 'fixed',
                 bottom: 0,
@@ -114,22 +113,15 @@ export const StoreScreen: React.FC = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
             }}>
-
                 <NavigationBar
                     initialSelected={"Store"}
                     onStoreClick={() => {}}
-                    onGiftClick={() => {
-                        navigate('/gift')
-                    }}
-                    onLeaderboardClick={() => {
-                        navigate('/leaderBoard')
-                    }}
-                    onProfileClick={() => {
-                        navigate('/profile')
-                    }}
+                    onGiftClick={() => navigate('/gift')}
+                    onLeaderboardClick={() => navigate('/leaderBoard')}
+                    onProfileClick={() => navigate('/profile')}
                 />
             </div>
-
+            {isLoading && <Progressbar/>}
         </div>
-    )
-}
+    );
+};

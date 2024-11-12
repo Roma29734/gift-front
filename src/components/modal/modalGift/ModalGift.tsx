@@ -6,6 +6,7 @@ import LottieAnimation from "../../otherViews/LottieAnimation.tsx";
 import {MainButton} from "../../otherViews/button/MainButton.tsx";
 import GiftTable from "../../otherViews/table/Table.tsx";
 import IcBgStar from "../../../assets/ico/ic_bg_star.svg";
+import {useTheme} from "../../../core/style/ThemeContext.tsx";
 
 interface ModalGiftProps {
     isVisible: boolean;
@@ -21,6 +22,7 @@ export const ModalGift: React.FC<ModalGiftProps> = ({isVisible, onClose, itemGif
     const sheetRef = useRef<HTMLDivElement>(null);
     const [isAnimating, setIsAnimating] = useState(false);
 
+    const {theme} = useTheme()
 
     useEffect(() => {
         if (isVisible) {
@@ -87,7 +89,7 @@ export const ModalGift: React.FC<ModalGiftProps> = ({isVisible, onClose, itemGif
             <div
                 ref={sheetRef}
                 style={{
-                    backgroundColor: "#EFEFF3",
+                    backgroundColor: theme.modalBg,
                     width: "100%",
                     maxWidth: "500px",
                     borderTopLeftRadius: '16px',
@@ -149,14 +151,14 @@ export const ModalGift: React.FC<ModalGiftProps> = ({isVisible, onClose, itemGif
                     <LottieAnimation
                         width={150}
                         height={150}
-                        url={`http://localhost:3000${itemGiftMore.img}`}
+                        url={`${itemGiftMore.img}`}
                     />
                 </div>
 
 
                 <span style={{
                     fontSize: '24px',
-                    color: 'black',
+                    color: theme.tTitle,
                     fontFamily: 'SFSEMIBOLD',
                     textAlign: 'center',
                 }}>

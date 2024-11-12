@@ -3,10 +3,15 @@ import {useLocation} from "react-router-dom";
 import LottieAnimation from "../../otherViews/LottieAnimation.tsx";
 import {MainButton} from "../../otherViews/button/MainButton.tsx";
 import {useTheme} from "../../../core/style/ThemeContext.tsx";
+import {sendToTgChose, useTelegramBackButton} from "../../../core/Utils.ts";
 
 
 export const ReceiveGiftScreen: React.FC = () => {
-
+    try {
+        useTelegramBackButton(true)
+    } catch (e ) {
+        console.log("error in postEvent - ", e)
+    }
     const location = useLocation();
     const gift = location.state?.gift;
 
@@ -33,7 +38,7 @@ export const ReceiveGiftScreen: React.FC = () => {
         }}>
 
 
-            <LottieAnimation width={100} height={100} url={`http://localhost:3000${gift.img}`}/>
+            <LottieAnimation width={100} height={100} url={`${gift.img}`}/>
 
 
             <span style={{
@@ -49,7 +54,7 @@ export const ReceiveGiftScreen: React.FC = () => {
                 fontSize: "17px",
                 textAlign: 'center'
             }}>
-                The {gift.name} gift was purchased for {gift.price} USD
+                The {gift.name} gift was purchased for {gift.price.value} {gift.price.nameCurrency}
             </span>
 
 
@@ -66,7 +71,8 @@ export const ReceiveGiftScreen: React.FC = () => {
             }}>
 
 
-                <MainButton tx={"Send GiftTypes"} onClick={() => {
+                <MainButton tx={"Send Gift"} onClick={() => {
+                    sendToTgChose('@app_gift_bot')
                 }}/>
 
                 <MainButton tx={"Open Store"} onClick={() => {

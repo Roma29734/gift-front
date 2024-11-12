@@ -1,0 +1,17 @@
+{
+  "store" : {
+    "buy_and_send": "Buy and Send Gifts",
+    "unique_gifts": "Unique gifts for everyone by Crypto Pay"
+  },
+  "navBar": {
+    "Store": "Store",
+    "Gifts": "Gifts",
+    "Leaderboard": "Leaderboard",
+    "Profile": "Profile"
+  },
+  "profile":{
+    "gifts_received": "gifts received",
+    "recent_actions": "Recent Actions"
+  }
+
+}

@@ -7,27 +7,34 @@ import {GiftItemSmall} from "../../otherViews/giftItemSmall/GiftItemSmall.tsx";
 import {SendGifModal} from "../../modal/sendGif/SendGif.tsx";
 import {useTheme} from "../../../core/style/ThemeContext.tsx";
 import {AbsenceGifts} from "../../otherViews/absenceGifts/AbsenceGifts.tsx";
+import {useTelegramBackButton} from "../../../core/Utils.ts";
+import Progressbar from "../../otherViews/progressBar/ProgressBar.tsx";
 
 export const GiftsScreen: React.FC = () => {
-
+    try {
+        useTelegramBackButton(true)
+    } catch (e ) {
+        console.log("error in postEvent - ", e)
+    }
     const navigate = useNavigate();
     const [gifts, setGifts] = useState<GiftArea[]>([])
-
     const {theme} = useTheme()
 
     const [isVisibleSendGiftModal, setIsVisibleSendGiftModal] = useState(false)
     const [selectedGifts, setSelectedGifts] = useState<GiftArea | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
     const processingGetGiftsForUser = async () => {
+        setIsLoading(true)
         const response = await getGiftsForUser()
         if (typeof response == "object") {
             setGifts(response)
         }
+        setIsLoading(false)
     }
 
     const onCloseModal = () => {
         setIsVisibleSendGiftModal(false)
     }
-
 
     useEffect(() => {
         processingGetGiftsForUser()
@@ -134,6 +141,8 @@ export const GiftsScreen: React.FC = () => {
                 <SendGifModal isVisible={isVisibleSendGiftModal} onClose={onCloseModal} onBtnClick={() => {
                 }} itemGiftMore={selectedGifts}/>
             }
+
+            {isLoading && <Progressbar/>}
 
         </div>
     )

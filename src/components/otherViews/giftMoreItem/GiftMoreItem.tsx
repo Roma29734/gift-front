@@ -56,7 +56,7 @@ export const GiftMoreItem: React.FC<GiftMoreItemParam> = ({urlGif, name, price, 
                     flexDirection: 'column',
                 }}>
 
-                    <LottieAnimation width={267} height={267} url={`http://localhost:3000${urlGif}`}/>
+                    <LottieAnimation width={267} height={267} url={`${urlGif}`}/>
                 </div>
             </div>
 

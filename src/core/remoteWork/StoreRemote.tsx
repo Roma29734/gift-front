@@ -1,10 +1,13 @@
 import {BASE_URL, initDataRaw} from "./RemoteGlobal.tsx";
 import axios from "axios";
 
+
+export type CurrencyType = "crypto" | "fiat";
 export interface Price {
     value: number;
     imgCurrency: string;
     nameCurrency: string;
+    currencyType: CurrencyType;
 }
 
 export interface Gift {
@@ -16,7 +19,7 @@ export interface Gift {
     bgColor: string;
 }
 
-interface User {
+export interface User {
     userId: string;
     userName: string;
     gifts: number;
@@ -44,8 +47,8 @@ export const getGifts = async () => {
 export const getUserById = async () => {
     try {
 
-        const response = await axios.get<User>(`${BASE_URL}users/get/1`, {headers: {Authorization: `tma ${initDataRaw}`}})
-        console.log("response", response)
+        const response = await axios.get<User>(`${BASE_URL}users/users`, {headers: {Authorization: `tma ${initDataRaw}`}})
+        console.log("response getUserById", response)
         return response.data
     }  catch (e) {
         console.log("Error", e)
@@ -57,11 +60,9 @@ export const getUserById = async () => {
 export const createUsers = async () => {
     try {
 
-        const response = await axios.post<User>(`${BASE_URL}users/users`, {
-            userId: '1',
-            userName: "roma"
-        },{headers: {Authorization: `tma ${initDataRaw}`}})
-        console.log("response", response)
+        const response = await axios.post<User>(`${BASE_URL}users/users`,
+            {},{headers: {Authorization: `tma ${initDataRaw}`}})
+        console.log("response createUsers", response)
         return response.data
     }  catch (e) {
         console.log("Error", e)

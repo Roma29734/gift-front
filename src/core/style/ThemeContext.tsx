@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { lightTheme, darkTheme } from './themes';
 
 type Theme = 'light' | 'dark';
@@ -21,21 +21,39 @@ interface ThemeContextType {
         tableBg: string;
     };
     toggleTheme: () => void;
+    getCurrentTheme: () => Theme; // Метод для получения текущей темы
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProviderComponent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [theme, setTheme] = useState<Theme>('light');
+    const [theme, setTheme] = useState<Theme>(() => {
+        // Проверка локального хранилища или системной темы при первой загрузке
+        const savedTheme = localStorage.getItem('theme') as Theme | null;
+        if (savedTheme) {
+            return savedTheme;
+        }
+        // Используем системную тему, если нет сохраненной
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    });
+
+    useEffect(() => {
+        // Сохраняем текущую тему в localStorage при изменении
+        localStorage.setItem('theme', theme);
+    }, [theme]);
 
     const toggleTheme = () => {
         setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
     };
 
+    const getCurrentTheme = (): Theme => {
+        return theme;
+    };
+
     const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
     return (
-        <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme, getCurrentTheme }}>
             {children}
         </ThemeContext.Provider>
     );

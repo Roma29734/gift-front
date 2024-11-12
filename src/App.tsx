@@ -3,7 +3,7 @@ import "./App.css"
 import {DataProvider} from "./components/otherViews/DataContext.tsx";
 import {ToastProvider} from "./components/otherViews/toast/ToastContext.tsx";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import { postEvent} from "@telegram-apps/sdk";
+import { postEvent, initSwipeBehavior} from "@telegram-apps/sdk";
 import {StoreScreen} from "./components/screen/store/Store.tsx";
 import {BuyGiftScreen} from "./components/screen/buyGift/BuyGift.tsx";
 import {ReceiveGiftScreen} from "./components/screen/receiveGift/ReceiveGift.tsx";
@@ -20,8 +20,8 @@ const App: React.FC = () => {
     try {
         postEvent('web_app_expand');
         try {
-            // const [swipeBehavior] = initSwipeBehavior();
-            // swipeBehavior.disableVerticalSwipe();
+            const [swipeBehavior] = initSwipeBehavior();
+            swipeBehavior.disableVerticalSwipe();
         } catch (e) {
             console.log("change behavor - err", e)
         }

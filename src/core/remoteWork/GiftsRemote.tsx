@@ -14,10 +14,7 @@ export interface GiftArea {
     date: Date;
 }
 
-
-
-
-export const getGiftsForUser = async (userId: string = "2"): Promise<GiftArea[] | string> => {
+export const getGiftsForUser = async (userId?: string | null): Promise<GiftArea[] | string> => {
     try {
         const response = await axios.post<GiftArea[]>(`${BASE_URL}gift/getGiftsForUser`, {
             userId: userId

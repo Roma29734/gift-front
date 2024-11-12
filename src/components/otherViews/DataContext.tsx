@@ -1,19 +1,12 @@
 import React, {createContext, useContext, useState, ReactNode, useEffect} from 'react';
+import {User} from "../../core/remoteWork/StoreRemote.tsx";
+
 
 // Определение интерфейсов
 
-
-interface UserBasic {
-    userId: string;
-    userName: string;
-    gifts: number;
-    createAt?: string;
-    dataUpdate?: string;
-    imageAvatar?: string | null;
-}
 interface DataContextType {
-    dataApp: UserBasic;
-    setDataApp: React.Dispatch<React.SetStateAction<UserBasic>>;
+    dataApp: User;
+    setDataApp: React.Dispatch<React.SetStateAction<User>>;
 }
 
 // Создание контекста
@@ -24,25 +17,20 @@ interface DataProviderProps {
     children: ReactNode;
 }
 
-const initialUserBasic: UserBasic = {
+const initialUserBasic: User = {
     userId: "",
     userName: "",
     gifts: 0
 };
 
 const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
-    const [dataApp, setDataApp] = useState<UserBasic>(() => {
-        const storedData = localStorage.getItem('dataApp');
-        return storedData ? JSON.parse(storedData) : initialUserBasic;
+    const [dataApp, setDataApp] = useState<User>(() => {
+        return  initialUserBasic;
     });
-
-
-
 
     useEffect(() => {
         localStorage.setItem('dataApp', JSON.stringify(dataApp));
     }, [dataApp]);
-
 
     return (
         <DataContext.Provider value={{ dataApp, setDataApp}}>

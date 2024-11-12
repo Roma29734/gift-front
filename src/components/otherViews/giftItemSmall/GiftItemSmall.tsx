@@ -69,7 +69,7 @@ export const GiftItemSmall: React.FC<GiftItemSmallParam> = ({
                     {name}
                 </span>
 
-                <LottieAnimation width={80} height={80} url={`http://localhost:3000${urlGif}`} />
+                <LottieAnimation width={80} height={80} url={`${urlGif}`} />
 
                     <div style={{
                     width: '100%',

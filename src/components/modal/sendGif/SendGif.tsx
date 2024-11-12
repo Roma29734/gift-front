@@ -155,7 +155,7 @@ export const SendGifModal: React.FC<ModalRatingProps> = ({isVisible, onClose, on
                     <LottieAnimation
                         width={150}
                         height={150}
-                        url={`http://localhost:3000${itemGiftMore.img}`}
+                        url={`${itemGiftMore.img}`}
                     />
                 </div>
 
@@ -182,7 +182,7 @@ export const SendGifModal: React.FC<ModalRatingProps> = ({isVisible, onClose, on
                 <div style={{height: '24px'}}/>
 
                 <MainButton tx={"Send Gift to Contact"} onClick={() => {
-                    sendToTgChose(`@GiftApp - ${itemGiftMore.name}`)
+                    sendToTgChose('@app_gift_bot =123')
                     onBtnClick()
                 }} padding={1}/>
 

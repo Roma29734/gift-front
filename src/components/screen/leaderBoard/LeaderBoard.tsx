@@ -5,22 +5,30 @@ import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getLeaderboard, getLeaderboardResponse} from "../../../core/remoteWork/LeaderBoardRemote.tsx";
 import {LeaderBoardItem} from "../../otherViews/leaderBoardItem/LeaderBoardItem.tsx";
+import {useTelegramBackButton} from "../../../core/Utils.ts";
+import Progressbar from "../../otherViews/progressBar/ProgressBar.tsx";
 
 
 export const LeaderBoardScreen: React.FC = () => {
-
+    try {
+        useTelegramBackButton(true)
+    } catch (e ) {
+        console.log("error in postEvent - ", e)
+    }
     const {theme} = useTheme()
     const navigate = useNavigate();
 
     const [isLeader, setIsLeader] = useState<getLeaderboardResponse[] | null>(null)
-
+    const [isLoading, setIsLoading] = useState(false)
 
     const isGetLeaderboard = async () => {
+        setIsLoading(true)
         const result = await getLeaderboard()
         console.log("result is",result)
         if(typeof result == "object") {
             setIsLeader(result)
         }
+        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -88,6 +96,6 @@ export const LeaderBoardScreen: React.FC = () => {
             />
         </div>
 
-
+        {isLoading && <Progressbar/>}
     </div>)
 }
